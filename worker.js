@@ -5,7 +5,7 @@ self.addEventListener('message', function(e) {
   switch (data) {
     case 'complexErosion':
       terrain = new LandMap({
-        containerId: "container-5"
+        containerId: "container-complexErosion"
       });
       terrain.generate(0.75, "standard");
       terrain.complexErosion({
@@ -19,7 +19,7 @@ self.addEventListener('message', function(e) {
       break;
     case 'simpleErosion':
       terrain = new LandMap({
-        containerId: "container-4"
+        containerId: "container-simpleErosion"
       });
       terrain.generate(0.75, "standard");
       terrain.simpleErosion({
@@ -33,7 +33,7 @@ self.addEventListener('message', function(e) {
       break;
     case 'grd':
       terrain = new LandMap({
-        containerId: "container-3"
+        containerId: "container-grd"
       });
       terrain.generate(0.75, "standard");
       terrain.grd(22, 0.01, "standard", "grd-22-0.01");
@@ -42,7 +42,7 @@ self.addEventListener('message', function(e) {
       break;
     case 'combined':
       terrain = new LandMap({
-        containerId: "container-2"
+        containerId: "container-combined"
       });
       terrain.generate(0.75, "standard");
       terrain.generate(0.75, "standard-two", "DS with 0.75");
@@ -53,13 +53,12 @@ self.addEventListener('message', function(e) {
       break;
     case 'standard':
       terrain = new LandMap({
-        containerId: "container-1"
+        containerId: "container-standard"
       });
       terrain.generate(0.75, "standard");
       terrain.smooth(10, "standard", "smoothed-10");
       terrain.smooth(20, "standard", "smoothed-20");
       break;
   };
-  console.log(terrain)
   self.postMessage(terrain);
 }, false);
