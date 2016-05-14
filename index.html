@@ -10,9 +10,12 @@
     <div class="container">
       <div class="row">
         <h1>Terrain Maps</h1>
-        <h4>Generating terrain maps using Diamon-Square, smoothing, and erosion algorithms.</h4>
-        <p>I've been messing around with different terrain smoothing algorithms to run on Diamond-Square-generated maps. I'm putting them here to so I remember them and write them out a little more clearly.</p>
-        <p><strong>NOTE: Some of these take upwards of 45 seconds to generate on a computer with a solid processor. Your milage may vary.</strong></p>
+        <h4>Generating terrain maps using Diamond-Square, smoothing, and erosion algorithms.</h4>
+        <p>I've been messing around with different terrain smoothing algorithms to run on Diamond-Square-generated maps. I'm putting them here to so I remember them and write them out a little more clearly. All maps use the Diamond-Square algorithm
+          to begin with. After than, some use smoothing passes, which essentially involves iterating over every point and setting it to be the average of all neighboring points within an X radius. Others involve erosion algorithms.</p>
+        <p>All maps are rendered with heighest points in white, lowest in black. Values are relative to minimum and maxmimum values, meaning that if a map was generated with a single point that is 100, and all others being around 5, it's going to
+          look pretty dark.</p>
+        <p><strong>NOTE: Some of these map sets take upwards of 45 seconds to generate on a computer with a solid processor. Your milage may vary.</strong></p>
       </div>
     </div>
     <!-- container-1 -->
