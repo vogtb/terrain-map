@@ -22,7 +22,7 @@ div.set-of:empty:before {
   text-align: center;
   width: 100%;
   display: block;
-  padding-top: 100px;
+  padding-top: 120px;
   vertical-align: middle;
   content: 'Press GENERATE to create maps.';
 }

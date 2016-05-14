@@ -88,6 +88,31 @@
       <div class="set-of" id="container-complexErosion"></div>
       <hr>
     </div>
+    <!-- container-6 -->
+    <div class="container">
+      <div class="row">
+        <h2>Varous Erosion Maps</h2>
+        <p>
+          Smoothing, Greedy Raindrop, and Complex Erosion algorithms applied to the same DS map.
+          <button class="run button-primary" id="sample">GENERATE</button>
+        </p>
+      </div>
+      <div class="set-of" id="container-sample"></div>
+      <hr>
+    </div>
+    <!-- container-7 -->
+    <div class="container">
+      <div class="row">
+        <h2>Combining Smooth, and Complex Erosion Maps</h2>
+        <p>
+          Combining smoothed map <code>p2</code> with an eroded map <code>p3</code>, by a third, unrelated smooth map <code>m2</code> to result in <code>c1 from (p3,p2,m2)</code>.
+          Also generating <code>c2 from (p2,p3,m2)</code> by swapping first two maps.
+          <button class="run button-primary" id="many">GENERATE</button>
+        </p>
+      </div>
+      <div class="set-of" id="container-many"></div>
+      <hr>
+    </div>
     <!-- hidden canvas for rendering-->
     <canvas class="hidden" id="tmp" width="256" height="256"></canvas>
   </body>
