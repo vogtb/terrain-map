@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function() {
   function LandMap(options) {
     var level = 8;
     this.containerId = options.containerId;
@@ -149,6 +149,101 @@ $(document).ready(function(){
     }
   };
 
+  LandMap.prototype.grd = function(amount, percent, featureFrom, featureTo) {
+    this.maps[featureTo] = new Array(this.size * this.size);
+
+    for (var y = 0; y < this.size; y++) {
+      for (var x = 0; x < this.size; x++) {
+        this.set(featureTo, x, y, this.get(featureFrom, x, y));
+      }
+    }
+
+    var operationAray = new Array(this.size * this.size);
+    var size = this.size
+    for (var y = 0; y < this.size; y++) {
+      for (var x = 0; x < this.size; x++) {
+        operationAray[(x + size * y)] = [0];
+      }
+    }
+
+    var MARGIN = amount;
+    for (var i = 0; i < MARGIN; i++) {
+      operationAray[(x + this.size * y)] = [0];
+      var max = Number.MIN_SAFE_INTEGER;
+      var min = Number.MAX_SAFE_INTEGER;
+      for (var y = 0; y < this.size; y++) {
+        for (var x = 0; x < this.size; x++) {
+          var val = this.get(featureTo, x, y);
+          if (val !== undefined) {
+            max = Math.max(max, val);
+            min = Math.min(min, val);
+          }
+        }
+      }
+
+      // iterate through all
+      for (var y = MARGIN; y < this.size - MARGIN; y++) {
+        for (var x = MARGIN; x < this.size - MARGIN; x++) {
+          var neighbors = [
+            this.get(featureTo, x - 1, y),
+            this.get(featureTo, x + 1, y),
+            this.get(featureTo, x, y - 1),
+            this.get(featureTo, x, y + 1)
+          ];
+          operationAray[(x + size * y)].push(this.get(featureTo, x, y));
+          var index = indexOfMax(featureTo);
+          var thisValue = this.get(featureTo, x, y);
+          if (neighbors[index] > thisValue) {
+            if (index == 0) {
+              // WEST (left)
+              operationAray[(x + size * y)].push(this.get(featureTo, x - 1, y) * percent);
+              operationAray[((x - 1) + size * y)].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
+            } else if (index == 1) {
+              // EAST (right)
+              operationAray[(x + size * y)].push(this.get(featureTo, x + 1, y) * percent);
+              operationAray[((x + 1) + size * y)].push(this.get(featureTo, x + 1, y) * (percent) * (-1));
+            } else if (index == 2) {
+              // NORTH (up)
+              operationAray[(x + size * y)].push(this.get(featureTo, x, y - 1) * percent);
+              operationAray[(x + size * (y - 1))].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
+            } else if (index == 3) {
+              // SOUTH (down)
+              operationAray[(x + size * y)].push(this.get(featureTo, x, y + 1) * percent);
+              operationAray[(x + size * (y + 1))].push(this.get(featureTo, x, y + 1) * (percent) * (-1));
+            }
+          }
+        }
+      }
+      //iterate through summing the operationAray, and setting it
+      for (var y = MARGIN; y < size - MARGIN; y++) {
+        for (var x = MARGIN; x < size - MARGIN; x++) {
+          var value = operationAray[(x + size * y)].reduce(function(a, b) {
+            return a + b;
+          }, 0);
+          this.set(featureTo, x, y, value);
+          operationAray[(x + size * y)] = [value];
+        }
+      }
+    }
+
+    function indexOfMax(arr) {
+      if (arr.length === 0) {
+        return -1;
+      }
+
+      var max = arr[0];
+      var maxIndex = 0;
+
+      for (var ind = 1; ind < arr.length; ind++) {
+        if (arr[ind] > max) {
+          maxIndex = ind;
+          max = arr[ind];
+        }
+      }
+      return maxIndex;
+    }
+  };
+
   LandMap.prototype.draw = function() {
     var html = '<div class="row">';
     var featureCount = 0;
@@ -229,4 +324,16 @@ $(document).ready(function(){
     terrain.combine("standard-10", "standard", "standard-two-20", "reversed");
     terrain.draw();
   });
+
+  $("#grd").click(function() {
+    var terrain = new LandMap({
+      containerId: "container-3"
+    });
+    terrain.generate(0.75, "standard");
+    terrain.grd(22, 0.01, "standard", "grd-22-0.01");
+    terrain.grd(20, 0.03, "standard", "grd-20-0.03");
+    terrain.grd(40, 0.01, "standard", "grd-40-0.01");
+    terrain.draw();
+  });
+
 })

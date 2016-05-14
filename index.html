@@ -16,9 +16,7 @@
     <div class="container">
       <hr>
       <div class="row">
-        <h2>
-          Standard Diamond-Square algorithm
-        </h2>
+        <h2>Standard Diamond-Square algorithm</h2>
         <p>
           Diamon-Square with smoothing of 10, and 20.
           <button class="run button-primary" id="standard">RUN</button>
@@ -28,8 +26,8 @@
       <hr>
       <div class="row">
         <h2>
-          Combining Diamond-Square maps
-        </h2>
+              Combining Diamond-Square maps
+            </h2>
         <p>
           Combining a DS, DS smoothed (10), and DS smoothed (20) maps. This is done by generating <code>standard</code>, then <code>standard-two</code>, a completely different map. Then using each of these to generate a smoothed version of themselves. Then
           we can combine standard with <code>standard-10</code>, using <code>standard-two-20</code> as the map controlling which parts of the map are used for the result. For example the higher the value of a given point on <code>standard-two-20</code>, the
@@ -47,13 +45,24 @@
     <div class="hidden">
       <canvas id="tmp" width="256" height="256"></canvas>
     </div>
+    <hr>
+    <div class="container">
+      <div class="row">
+        <h2>Greedy Raindrop Erosion Algorithm</h2>
+        <p>
+          For each point on the map, steal a certain percentage off the tallest neighbor. Results in blochy, plateau-like formations.
+          <button class="run button-primary" id="grd">RUN</button>
+        </p>
+      </div>
+      <div class="set-of" id="container-3"></div>
+    </div>
     <div class="container">
       <hr>
       <div class="row">
         <p>
           That's all!
         </p>
-      </div>.
+      </div>
     </div>
   </body>
 </html>
