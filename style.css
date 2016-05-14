@@ -27,6 +27,11 @@ div.set-of:empty:before {
   content: 'Press GENERATE to create maps.';
 }
 
+div.set-of .spinner {
+  margin-left: 50%;
+  padding-top: 100px;
+}
+
 .run {
   float: right;
 }
