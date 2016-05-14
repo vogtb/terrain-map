@@ -9,10 +9,34 @@ self.addEventListener('message', function(e) {
       });
       terrain.generate(0.75, "standard");
       terrain.complexErosion({
-        carryingCapacity: 1.0,
-        depositionSpeed: 0.1,
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
+        iterations: 10,
+        drops: 1000000,
+        one: "standard",
+        two: "complexErosion-1000000-10ipd"
+      });
+      terrain.complexErosion({
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
+        iterations: 20,
+        drops: 1000000,
+        one: "standard",
+        two: "complexErosion-1000000-20ipd"
+      });
+      terrain.complexErosion({
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
         iterations: 3,
-        drops: 2000000,
+        drops: 4000000,
+        one: "standard",
+        two: "complexErosion-4000000-3ipd"
+      });
+      terrain.complexErosion({
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
+        iterations: 3,
+        drops: 8000000,
         one: "standard",
         two: "complexErosion-8000000-3ipd"
       });
