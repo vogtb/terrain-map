@@ -6,6 +6,10 @@ img.map {
   border: 1px solid #E0E0E0;
 }
 
+div.box {
+  padding-bottom: 20px;
+}
+
 div.set-of {
   min-height: 256px;
 }
