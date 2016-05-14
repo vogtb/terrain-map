@@ -263,11 +263,8 @@ $(document).ready(function() {
   };
 
   LandMap.prototype.erosion = function(options) {
-    var Kq = options.Kq;
-    var Kw = options.evaporationSpeed;
-    var Kr = options.erosionSpeed;
+    var Kq = options.carryingCapacity;
     var Kd = options.depositionSpeed;
-    var Kg = options.gravity * 2;
     var iterations = options.iterations;
     var drops = options.drops;
     var one = options.one;
@@ -476,11 +473,8 @@ $(document).ready(function() {
     });
     terrain.generate(0.75, "standard");
     terrain.erosion({
-      Kq: 1.5,
-      evaporationSpeed: 0.001,
-      erosionSpeed: 1.01,
+      carryingCapacity: 1.5,
       depositionSpeed: 0.03,
-      gravity: 10,
       iterations: 10,
       drops: 1000000,
       one: "standard",
