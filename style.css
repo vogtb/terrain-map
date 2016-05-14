@@ -18,6 +18,15 @@ div.set-of:empty {
   background: #F5F5F5;
 }
 
+div.set-of:empty:before {
+  text-align: center;
+  width: 100%;
+  display: block;
+  padding-top: 100px;
+  vertical-align: middle;
+  content: 'Press GENERATE to create maps.';
+}
+
 .run {
   float: right;
 }

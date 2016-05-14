@@ -22,10 +22,10 @@
     <div class="container">
       <hr>
       <div class="row">
-        <h2>Standard Diamond-Square algorithm</h2>
+        <h2>Standard Diamond-Square Algorithm</h2>
         <p>
           Diamon-Square with smoothing of 10, and 20.
-          <button class="run button-primary" id="standard">RUN</button>
+          <button class="run button-primary" id="standard">GENERATE</button>
         </p>
       </div>
       <div class="set-of" id="container-1"></div>
@@ -34,7 +34,7 @@
     <!-- container-2 -->
     <div class="container">
       <div class="row">
-        <h2>Combining Diamond-Square maps</h2>
+        <h2>Combining Diamond-Square Maps</h2>
         <p>
           Combining a DS, DS smoothed (10), and DS smoothed (20) maps. This is done by generating <code>standard</code>, then <code>standard-two</code>, a completely different map. Then using each of these to generate a smoothed version of themselves. Then
           we can combine standard with <code>standard-10</code>, using <code>standard-two-20</code> as the map controlling which parts of the map are used for the result. For example the higher the value of a given point on <code>standard-two-20</code>, the
@@ -44,7 +44,7 @@
         <p>
           This allows us to generate a map that has terrain that is smooth in some parts, and rugged in other parts.
           <br>The final <code>reverse</code> map, is with the <code>standard</code> and <code>standard-10</code> maps swapped, so the smooth and rugged values are reversed.
-          <button class="run button-primary" id="combined">RUN</button>
+          <button class="run button-primary" id="combined">GENERATE</button>
         </p>
       </div>
       <div class="set-of" id="container-2"></div>
@@ -56,7 +56,7 @@
         <h2>Greedy Raindrop Erosion Algorithm</h2>
         <p>
           For each point on the map, steal a certain percentage off the tallest neighbor. Results in blochy, plateau-like formations.
-          <button class="run button-primary" id="grd">RUN</button>
+          <button class="run button-primary" id="grd">GENERATE</button>
         </p>
       </div>
       <div class="set-of" id="container-3"></div>
@@ -69,7 +69,7 @@
         <p>
           Randomly place a "droplet" of water on the map. For a number of iterations, let the droplet roll to it's nearest neighbor, eroding it's current point on the map if the droplet has not reached it carrying-capacity of sediment. If it has reached
           it's carrying capacity, deposit sediment on that point. Repeat this process with many more droplets.
-          <button class="run button-primary" id="simpleErosion">RUN</button>
+          <button class="run button-primary" id="simpleErosion">GENERATE</button>
         </p>
       </div>
       <div class="set-of" id="container-4"></div>
@@ -81,7 +81,7 @@
         <h2>Complex Erosion Algorithm</h2>
         <p>
           Like <em>Simple Erosion Algorithm</em> but it uses velocity (with a minimum velocity ensure), slope (with a minimum slope ensured as well) to calculate carring capacity and depositing.
-          <button class="run button-primary" id="complexErosion">RUN</button>
+          <button class="run button-primary" id="complexErosion">GENERATE</button>
         </p>
       </div>
       <div class="set-of" id="container-5"></div>
