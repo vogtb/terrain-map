@@ -6,6 +6,7 @@
     <script type="text/javascript" src="main.js"></script>
   </head>
   <body>
+    <!-- header -->
     <div class="container">
       <div class="row">
         <h1>Terrain Maps</h1>
@@ -13,6 +14,7 @@
         <p>I've been messing around with different terrain smoothing algorithms to run on Diamond-Square-generated maps. I'm putting them here to so I remember them and write them out a little more clearly.</p>
       </div>
     </div>
+    <!-- container-1 -->
     <div class="container">
       <hr>
       <div class="row">
@@ -25,6 +27,7 @@
       <div class="set-of" id="container-1"></div>
       <hr>
     </div>
+    <!-- container-2 -->
     <div class="container">
       <div class="row">
         <h2>Combining Diamond-Square maps</h2>
@@ -43,6 +46,7 @@
       <div class="set-of" id="container-2"></div>
       <hr>
     </div>
+    <!-- container-3 -->
     <div class="container">
       <div class="row">
         <h2>Greedy Raindrop Erosion Algorithm</h2>
@@ -54,17 +58,31 @@
       <div class="set-of" id="container-3"></div>
       <hr>
     </div>
+    <!-- container-4 -->
     <div class="container">
       <div class="row">
-        <h2>Soil Erosion Algorithm</h2>
+        <h2>Simple Erosion Algorithm</h2>
         <p>
           Randomly place a "droplet" of water on the map. For a number of iterations, let the droplet roll to it's nearest neighbor, eroding it's current point on the map if the droplet has not reached it carrying-capacity of sediment. If it has reached
           it's carrying capacity, deposit sediment on that point. Repeat this process with many more droplets.
-          <button class="run button-primary" id="erosion">RUN</button>
+          <button class="run button-primary" id="simpleErosion">RUN</button>
         </p>
       </div>
       <div class="set-of" id="container-4"></div>
+      <hr>
     </div>
+    <!-- container-5 -->
+    <div class="container">
+      <div class="row">
+        <h2>Complex Erosion Algorithm</h2>
+        <p>
+          <button class="run button-primary" id="complexErosion">RUN</button>
+        </p>
+      </div>
+      <div class="set-of" id="container-5"></div>
+      <hr>
+    </div>
+    <!-- hidden canvas for rendering-->
     <canvas class="hidden" id="tmp" width="256" height="256"></canvas>
   </body>
 </html>

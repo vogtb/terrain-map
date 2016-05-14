@@ -262,14 +262,13 @@ $(document).ready(function() {
     }
   };
 
-  LandMap.prototype.erosion = function(options) {
+  LandMap.prototype.simpleErosion = function(options) {
     var Kq = options.carryingCapacity;
     var Kd = options.depositionSpeed;
     var iterations = options.iterations;
     var drops = options.drops;
     var one = options.one;
     var two = options.two;
-    var ds = 0;
 
     var HeightMap = new Array(this.size * this.size);
     for (var y = 0; y < this.size; y++) {
@@ -289,18 +288,14 @@ $(document).ready(function() {
       return HeightMap[(x + HMAP_SIZE * y)];
     }
 
-
-    var MAX_PATH_LEN = this.size * 4;
-
     function DEPOSIT_AT(X, Y) {
       var c = 0.0;
       var v = 1.05;
-      var g = 1.4;
-      var mv = 10.0;
+      var maxVelocity = 10.0;
 
       // For the number of iterations
       for (var iter = 0; iter < iterations; iter++) {
-        var v = Math.min(v, mv); // limiting velocity
+        v = Math.min(v, maxVelocity); // limiting velocity
         var val = HMAP_VALUE(X, Y);
         var nv = [
           HMAP_VALUE(X, Y - 1), //NORTH
@@ -371,8 +366,115 @@ $(document).ready(function() {
       DEPOSIT_AT(Math.floor(Math.random() * this.size), Math.floor(Math.random() * this.size));
       this.maps[two] = HeightMap;
     }
-  }
+  };
 
+  LandMap.prototype.complexErosion = function(options) {
+    var Kq = options.carryingCapacity;
+    var Kd = options.depositionSpeed;
+    var iterations = options.iterations;
+    var drops = options.drops;
+    var one = options.one;
+    var two = options.two;
+
+    var HeightMap = new Array(this.size * this.size);
+    for (var y = 0; y < this.size; y++) {
+      for (var x = 0; x < this.size; x++) {
+        HeightMap[(x + this.size * y)] = this.get(one, x, y);
+      }
+    }
+
+    var HMAP_SIZE = this.size;
+
+    function HMAP_INDEX(x, y) {
+      var val = (x + HMAP_SIZE * y)
+      return val;
+    }
+
+    function HMAP_VALUE(x, y) {
+      return HeightMap[(x + HMAP_SIZE * y)];
+    }
+
+    function DEPOSIT_AT(X, Y) {
+      var c = 0.0;
+      var v = 1.05;
+      var minSlope = 1.15;
+      var maxVelocity = 10.0;
+
+      // For the number of iterations
+      for (var iter = 0; iter < iterations; iter++) {
+        v = Math.min(v, maxVelocity); // limiting velocity
+        var val = HMAP_VALUE(X, Y);
+        var nv = [
+          HMAP_VALUE(X, Y - 1), //NORTH
+          HMAP_VALUE(X, Y + 1), //SOUTH
+          HMAP_VALUE(X + 1, Y), //EAST
+          HMAP_VALUE(X - 1, Y) //WEST
+        ];
+
+        var minInd = indexOfMin(nv);
+        // if the lowest neighbor is NOT greater than the current value
+        if (nv[minInd] < val) {
+          //deposit or erode
+          var slope = Math.min(minSlope, val - nv[minInd])
+          var vtc = Kd * v * slope; // value to steal is depositionSpeed * velocity * abs(slope);
+          // if carrying amount is greater than Kq
+          if (c > Kq) {
+            //DEPOSIT
+            c -= vtc;
+            HeightMap[HMAP_INDEX(X, Y)] += vtc;
+          } else {
+            //ERODE
+            // if carrying + value to steal > carrying cap
+            if (c + vtc > Kq) {
+              var delta = c + vtc - Kq;
+              c += delta;
+              HeightMap[HMAP_INDEX(X, Y)] -= delta;
+            } else {
+              c += vtc;
+              HeightMap[HMAP_INDEX(X, Y)] -= vtc;
+            }
+          }
+
+          // move to next value
+          if (minInd == 0) {
+            //NORTH
+            Y -= 1
+          }
+          if (minInd == 1) {
+            //SOUTH
+            Y += 1
+          }
+          if (minInd == 2) {
+            //EAST
+            X += 1
+          }
+          if (minInd == 3) {
+            //WEST
+            X -= 1
+          }
+
+          // limiting to edge of map
+          if (X > this.size - 1) {
+            X = this.size;
+          }
+          if (Y > this.size - 1) {
+            Y = this.size;
+          }
+          if (Y < 0) {
+            Y = 0;
+          }
+          if (X < 0) {
+            X = 0;
+          }
+        }
+      }
+    }
+
+    for (var drop = 0; drop < drops; drop++) {
+      DEPOSIT_AT(Math.floor(Math.random() * this.size), Math.floor(Math.random() * this.size));
+      this.maps[two] = HeightMap;
+    }
+  };
 
   LandMap.prototype.draw = function() {
     var html = '<div class="row">';
@@ -467,20 +569,34 @@ $(document).ready(function() {
   });
 
 
-  $("#erosion").click(function() {
+  $("#simpleErosion").click(function() {
     var terrain = new LandMap({
       containerId: "container-4"
     });
     terrain.generate(0.75, "standard");
-    terrain.erosion({
+    terrain.simpleErosion({
       carryingCapacity: 1.5,
       depositionSpeed: 0.03,
       iterations: 10,
       drops: 1000000,
       one: "standard",
-      two: "erosion"
+      two: "simpleErosion"
     });
     terrain.draw();
   });
+
+  var terrain = new LandMap({
+    containerId: "container-5"
+  });
+  terrain.generate(0.75, "standard");
+  terrain.complexErosion({
+    carryingCapacity: 1.5,
+    depositionSpeed: 0.03,
+    iterations: 10,
+    drops: 1000000,
+    one: "standard",
+    two: "complexErosion"
+  });
+  terrain.draw();
 
 })
