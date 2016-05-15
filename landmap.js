@@ -53,7 +53,9 @@ LandMap.prototype.set = function(which, x, y, value) {
   this.maps[which][(x + this.size * y)] = value;
 };
 
-LandMap.prototype.generate = function(deviationAmount, feature) {
+LandMap.prototype.generate = function(options) {
+  var deviationAmount = options.deviation,
+    feature = options.feature;
   var self = this;
 
   if (!(feature in self.maps)) {
@@ -116,7 +118,11 @@ LandMap.prototype.generate = function(deviationAmount, feature) {
   }
 };
 
-LandMap.prototype.smooth = function(amount, featureFrom, featureTo) {
+LandMap.prototype.smooth = function(options) {
+  var amount = options.amount,
+    featureFrom = options.from,
+    featureTo = options.to;
+
   if (!(featureTo in this.maps)) {
     this.maps[featureTo] = new Array(this.size * this.size);
   }
@@ -146,7 +152,11 @@ LandMap.prototype.smooth = function(amount, featureFrom, featureTo) {
   }
 };
 
-LandMap.prototype.combine = function(one, two, three, result) {
+LandMap.prototype.combine = function(options) {
+  var one = options.one,
+    two = options.two,
+    three = options.three,
+    result = options.result;
 
   function percent(value, max, min) {
     return value / Math.abs((max - min));
@@ -182,7 +192,12 @@ LandMap.prototype.combine = function(one, two, three, result) {
   }
 };
 
-LandMap.prototype.grd = function(amount, percent, featureFrom, featureTo) {
+LandMap.prototype.grd = function(options) {
+  var amount = options.amount,
+    percent = options.percent,
+    featureFrom = options.from,
+    featureTo = options.to;
+
   this.maps[featureTo] = new Array(this.size * this.size);
 
   for (var y = 0; y < this.size; y++) {
