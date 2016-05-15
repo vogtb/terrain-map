@@ -195,23 +195,40 @@ self.addEventListener('message', function(e) {
         result: "reversed"
       });
       break;
+    case 'smoothed':
+      terrain = new LandMap({
+        containerId: "container-smoothed"
+      });
+      terrain.generate({
+        deviation: 0.75,
+        feature: "p1"
+      });
+      terrain.smooth({
+        amount: 10,
+        from: "p1",
+        to: "p2"
+      });
+      terrain.smooth({
+        amount: 20,
+        from: "p1",
+        to: "p3"
+      });
+      break;
     case 'standard':
       terrain = new LandMap({
         containerId: "container-standard"
       });
       terrain.generate({
+        deviation: 0.35,
+        feature: "m1"
+      });
+      terrain.generate({
         deviation: 0.75,
-        feature: "standard"
+        feature: "p1"
       });
-      terrain.smooth({
-        amount: 10,
-        from: "standard",
-        to: "standard-10"
-      });
-      terrain.smooth({
-        amount: 20,
-        from: "standard",
-        to: "standard-20"
+      terrain.generate({
+        deviation: 0.95,
+        feature: "r1"
       });
       break;
   };
