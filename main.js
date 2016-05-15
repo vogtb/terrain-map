@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   $("button").click(function(event) {
     spinner("container-" + event.target.id);
-    var worker = new Worker('worker.js?salt='+(+(new Date())));//salting to bust cache
+    var worker = new Worker('worker.js?salt=' + (+(new Date()))); //salting to bust cache
     worker.postMessage(event.target.id);
     worker.addEventListener('message', function(e) {
       var terrain = new LandMap(e.data);

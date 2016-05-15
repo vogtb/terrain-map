@@ -39,6 +39,7 @@ function LandMap(options) {
   this.size = Math.pow(2, level) + 1;
   this.max = this.size - 1;
   this.maps = options.maps || {};
+  this.meta = options.meta || {}
 }
 
 LandMap.prototype.get = function(which, x, y) {
@@ -56,6 +57,7 @@ LandMap.prototype.set = function(which, x, y, value) {
 LandMap.prototype.generate = function(options) {
   var deviationAmount = options.deviation,
     feature = options.feature;
+  this.meta[options.feature] = options;
   var self = this;
 
   if (!(feature in self.maps)) {
@@ -123,6 +125,8 @@ LandMap.prototype.smooth = function(options) {
     featureFrom = options.from,
     featureTo = options.to;
 
+  this.meta[featureTo] = options;
+
   if (!(featureTo in this.maps)) {
     this.maps[featureTo] = new Array(this.size * this.size);
   }
@@ -157,6 +161,8 @@ LandMap.prototype.combine = function(options) {
     two = options.two,
     three = options.three,
     result = options.result;
+
+  this.meta[result] = options;
 
   function percent(value, max, min) {
     return value / Math.abs((max - min));
@@ -197,6 +203,8 @@ LandMap.prototype.grd = function(options) {
     percent = options.percent,
     featureFrom = options.from,
     featureTo = options.to;
+
+  this.meta[featureTo] = options;
 
   this.maps[featureTo] = new Array(this.size * this.size);
 
@@ -282,6 +290,8 @@ LandMap.prototype.simpleErosion = function(options) {
   var drops = options.drops;
   var one = options.one;
   var two = options.two;
+
+  this.meta[two] = options;
 
   var HeightMap = new Array(this.size * this.size);
   for (var y = 0; y < this.size; y++) {
@@ -389,6 +399,8 @@ LandMap.prototype.complexErosion = function(options) {
   var one = options.one;
   var two = options.two;
 
+  this.meta[two] = options;
+
   var HeightMap = new Array(this.size * this.size);
   for (var y = 0; y < this.size; y++) {
     for (var x = 0; x < this.size; x++) {
@@ -493,7 +505,7 @@ LandMap.prototype.draw = function() {
   var html = '<div class="row">';
   var featureCount = 0;
   for (feature in this.maps) {
-    html += '<div class="four columns"><strong>' + feature + '</strong><div class="box"><span id="' + this.containerId + feature + '"></span><span id="' + feature + '-description"></span></div></div>';
+    html += '<div class="four columns"><strong>' + feature + '</strong><br><div class="box"><span id="' + this.containerId + feature + '"></span><pre>' + JSON.stringify(this.meta[feature], null, 2) + '</pre></div></div>';
     featureCount++;
     if (featureCount == 3) {
       html += '</div><div class="row">'
