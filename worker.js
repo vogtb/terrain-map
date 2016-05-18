@@ -3,6 +3,28 @@ self.addEventListener('message', function(e) {
   var data = e.data;
   var terrain;
   switch (data) {
+    case 'smooth-simple-erosion':
+      terrain = new LandMap({
+        containerId: "container-smooth-simple-erosion"
+      });
+      terrain.generate({
+        deviation: 0.75,
+        feature: "m1"
+      });
+      terrain.simpleErosion({
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
+        iterations: 10,
+        drops: 1000000,
+        from: "m1",
+        to: "m2"
+      });
+      terrain.smooth({
+        amount: 3,
+        from: "m2",
+        to: "m3"
+      });
+      break;
     case 'smooth-complex-erosion':
       terrain = new LandMap({
         containerId: "container-smooth-complex-erosion"
@@ -16,27 +38,13 @@ self.addEventListener('message', function(e) {
         depositionSpeed: 0.03,
         iterations: 3,
         drops: 8000000,
-        one: "m1",
-        two: "m2"
+        from: "m1",
+        to: "m2"
       });
       terrain.smooth({
         amount: 2,
         from: "m2",
         to: "m3"
-      });
-      break;
-      //combining
-      terrain.combine({
-        one: "p2",
-        two: "p3",
-        three: "m2",
-        result: "c1 from (p2,p3,m2)"
-      });
-      terrain.combine({
-        one: "p3",
-        two: "p2",
-        three: "m2",
-        result: "c2 from (p3,p2,m2)"
       });
       break;
     case 'many':
@@ -66,8 +74,8 @@ self.addEventListener('message', function(e) {
         depositionSpeed: 0.03,
         iterations: 3,
         drops: 8000000,
-        one: "p2",
-        two: "p3"
+        from: "p2",
+        to: "p3"
       });
       //combining
       terrain.combine({
@@ -107,8 +115,8 @@ self.addEventListener('message', function(e) {
         depositionSpeed: 0.03,
         iterations: 3,
         drops: 8000000,
-        one: "standard",
-        two: "complexErosion-8000000-3ipd"
+        from: "standard",
+        to: "complexErosion-8000000-3ipd"
       });
       break;
     case 'complexErosion':
@@ -124,32 +132,32 @@ self.addEventListener('message', function(e) {
         depositionSpeed: 0.03,
         iterations: 10,
         drops: 1000000,
-        one: "standard",
-        two: "complexErosion-1000000-10ipd"
+        from: "standard",
+        to: "complexErosion-1000000-10ipd"
       });
       terrain.complexErosion({
         carryingCapacity: 1.5,
         depositionSpeed: 0.03,
         iterations: 20,
         drops: 1000000,
-        one: "standard",
-        two: "complexErosion-1000000-20ipd"
+        from: "standard",
+        to: "complexErosion-1000000-20ipd"
       });
       terrain.complexErosion({
         carryingCapacity: 1.5,
         depositionSpeed: 0.03,
         iterations: 3,
         drops: 4000000,
-        one: "standard",
-        two: "complexErosion-4000000-3ipd"
+        from: "standard",
+        to: "complexErosion-4000000-3ipd"
       });
       terrain.complexErosion({
         carryingCapacity: 1.5,
         depositionSpeed: 0.03,
         iterations: 3,
         drops: 8000000,
-        one: "standard",
-        two: "complexErosion-8000000-3ipd"
+        from: "standard",
+        to: "complexErosion-8000000-3ipd"
       });
       break;
     case 'simpleErosion':
@@ -165,8 +173,8 @@ self.addEventListener('message', function(e) {
         depositionSpeed: 0.03,
         iterations: 10,
         drops: 1000000,
-        one: "standard",
-        two: "simpleErosion"
+        from: "standard",
+        to: "simpleErosion"
       });
       break;
     case 'grd':

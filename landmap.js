@@ -288,8 +288,8 @@ LandMap.prototype.simpleErosion = function(options) {
   var Kd = options.depositionSpeed;
   var iterations = options.iterations;
   var drops = options.drops;
-  var one = options.one;
-  var two = options.two;
+  var one = options.from;
+  var two = options.to;
 
   this.meta[two] = options;
 
@@ -396,8 +396,8 @@ LandMap.prototype.complexErosion = function(options) {
   var Kd = options.depositionSpeed;
   var iterations = options.iterations;
   var drops = options.drops;
-  var one = options.one;
-  var two = options.two;
+  var one = options.from;
+  var two = options.to;
 
   this.meta[two] = options;
 
