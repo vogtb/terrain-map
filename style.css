@@ -7,18 +7,18 @@ img.map {
 }
 
 div.box {
-  padding-bottom: 20px;
+  padding-bottom: 14px;
 }
 
-div.set-of {
+div.set {
   min-height: 256px;
 }
 
-div.set-of:empty {
+div.set:empty {
   background: #F5F5F5;
 }
 
-div.set-of:empty:before {
+div.set:empty:before {
   text-align: center;
   width: 100%;
   display: block;
@@ -27,7 +27,7 @@ div.set-of:empty:before {
   content: 'Press GENERATE to create maps.';
 }
 
-div.set-of .spinner {
+div.set .spinner {
   margin-left: 50%;
   padding-top: 100px;
 }
@@ -237,7 +237,7 @@ body {
   /* currently ems cause chrome bug misinterpreting rems on body element */
   line-height: 1.6;
   font-weight: 400;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Georgia, Times, serif;
   color: #222;
 }
 
