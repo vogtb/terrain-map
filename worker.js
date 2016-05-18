@@ -3,6 +3,42 @@ self.addEventListener('message', function(e) {
   var data = e.data;
   var terrain;
   switch (data) {
+    case 'smooth-complex-erosion':
+      terrain = new LandMap({
+        containerId: "container-smooth-complex-erosion"
+      });
+      terrain.generate({
+        deviation: 0.75,
+        feature: "m1"
+      });
+      terrain.complexErosion({
+        carryingCapacity: 1.5,
+        depositionSpeed: 0.03,
+        iterations: 3,
+        drops: 8000000,
+        one: "m1",
+        two: "m2"
+      });
+      terrain.smooth({
+        amount: 2,
+        from: "m2",
+        to: "m3"
+      });
+      break;
+      //combining
+      terrain.combine({
+        one: "p2",
+        two: "p3",
+        three: "m2",
+        result: "c1 from (p2,p3,m2)"
+      });
+      terrain.combine({
+        one: "p3",
+        two: "p2",
+        three: "m2",
+        result: "c2 from (p3,p2,m2)"
+      });
+      break;
     case 'many':
       terrain = new LandMap({
         containerId: "container-many"
