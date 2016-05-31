@@ -215,10 +215,9 @@ LandMap.prototype.grd = function(options) {
   }
 
   var operationAray = new Array(this.size * this.size);
-  var size = this.size
   for (var y = 0; y < this.size; y++) {
     for (var x = 0; x < this.size; x++) {
-      operationAray[(x + size * y)] = [0];
+      operationAray[(x + this.size * y)] = [0];
     }
   }
 
@@ -238,46 +237,48 @@ LandMap.prototype.grd = function(options) {
     }
 
     // iterate through all
-    for (var y = MARGIN; y < this.size - MARGIN; y++) {
-      for (var x = MARGIN; x < this.size - MARGIN; x++) {
+    // for (var xRange = Math.max(x - Math.round(MARGIN), 0); xRange < Math.min(x + Math.round(MARGIN), this.size); xRange++) {
+    //   for (var yRange = Math.max(y - Math.round(MARGIN), 0); yRange < Math.min(y + Math.round(MARGIN), this.size); yRange++) {
+    for (var y = 1; y < this.size-2; y++) {
+      for (var x = 1; x < this.size-2; x++) {
         var neighbors = [
           this.get(featureTo, x - 1, y),
           this.get(featureTo, x + 1, y),
           this.get(featureTo, x, y - 1),
           this.get(featureTo, x, y + 1)
         ];
-        operationAray[(x + size * y)].push(this.get(featureTo, x, y));
+        operationAray[(x + this.size * y)].push(this.get(featureTo, x, y));
         var index = indexOfMax(featureTo);
         var thisValue = this.get(featureTo, x, y);
         if (neighbors[index] > thisValue) {
           if (index == 0) {
             // WEST (left)
-            operationAray[(x + size * y)].push(this.get(featureTo, x - 1, y) * percent);
-            operationAray[((x - 1) + size * y)].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
+            operationAray[(x + this.size * y)].push(this.get(featureTo, x - 1, y) * percent);
+            operationAray[((x - 1) + this.size * y)].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
           } else if (index == 1) {
             // EAST (right)
-            operationAray[(x + size * y)].push(this.get(featureTo, x + 1, y) * percent);
-            operationAray[((x + 1) + size * y)].push(this.get(featureTo, x + 1, y) * (percent) * (-1));
+            operationAray[(x + this.size * y)].push(this.get(featureTo, x + 1, y) * percent);
+            operationAray[((x + 1) + this.size * y)].push(this.get(featureTo, x + 1, y) * (percent) * (-1));
           } else if (index == 2) {
             // NORTH (up)
-            operationAray[(x + size * y)].push(this.get(featureTo, x, y - 1) * percent);
-            operationAray[(x + size * (y - 1))].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
+            operationAray[(x + this.size * y)].push(this.get(featureTo, x, y - 1) * percent);
+            operationAray[(x + this.size * (y - 1))].push(this.get(featureTo, x - 1, y) * (percent) * (-1));
           } else if (index == 3) {
             // SOUTH (down)
-            operationAray[(x + size * y)].push(this.get(featureTo, x, y + 1) * percent);
-            operationAray[(x + size * (y + 1))].push(this.get(featureTo, x, y + 1) * (percent) * (-1));
+            operationAray[(x + this.size * y)].push(this.get(featureTo, x, y + 1) * percent);
+            operationAray[(x + this.size * (y + 1))].push(this.get(featureTo, x, y + 1) * (percent) * (-1));
           }
         }
       }
     }
     //iterate through summing the operationAray, and setting it
-    for (var y = MARGIN; y < size - MARGIN; y++) {
-      for (var x = MARGIN; x < size - MARGIN; x++) {
-        var value = operationAray[(x + size * y)].reduce(function(a, b) {
+    for (var y = 1; y < this.size - 2; y++) {
+      for (var x = 1; x < this.size - 2; x++) {
+        var value = operationAray[(x + this.size * y)].reduce(function(a, b) {
           return a + b;
         }, 0);
         this.set(featureTo, x, y, value);
-        operationAray[(x + size * y)] = [value];
+        operationAray[(x + this.size * y)] = [value];
       }
     }
   }
