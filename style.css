@@ -24,7 +24,7 @@ div.set:empty:before {
   display: block;
   padding-top: 120px;
   vertical-align: middle;
-  content: 'Press GENERATE to create maps.';
+  content: 'Click GENERATE to create maps.';
 }
 
 div.set .spinner {
